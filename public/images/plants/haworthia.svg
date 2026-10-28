@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 680" role="img" aria-label="Illustration of haworthia">
+    <defs>
+      <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e4eade"/><stop offset="1" stop-color="#faf9f0"/></linearGradient>
+      <linearGradient id="pot" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a57e67"/><stop offset="1" stop-color="#8b624d"/></linearGradient>
+      <radialGradient id="glow"><stop stop-color="#ffffff" stop-opacity=".75"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="640" height="680" fill="url(#wall)"/>
+    <circle cx="320" cy="265" r="265" fill="url(#glow)"/>
+    <circle cx="492" cy="96" r="59" fill="#fff" fill-opacity=".16"/>
+    <ellipse cx="320" cy="574" rx="155" ry="19" fill="#2d3e30" fill-opacity=".11"/>
+    <g><path d="M 264.0 476 Q 162.0 367.0 180.0 257.0 Q 200.0 361.0 286.0 476 Z" fill="#507e68" stroke="#397657" stroke-width="2"/><path d="M 275.0 465 L 180.0 285.0" stroke="#d5e5ae" stroke-width="3" opacity=".6"/><path d="M 273.0 476 Q 190.0 342.0 208.0 232.0 Q 228.0 336.0 295.0 476 Z" fill="#b7d19a" stroke="#397657" stroke-width="2"/><path d="M 282.0 476 Q 218.0 342.0 236.0 232.0 Q 256.0 336.0 304.0 476 Z" fill="#6ea184" stroke="#397657" stroke-width="2"/><path d="M 293.0 465 L 236.0 260.0" stroke="#d5e5ae" stroke-width="3" opacity=".6"/><path d="M 291.0 476 Q 246.0 314.0 264.0 204.0 Q 284.0 308.0 313.0 476 Z" fill="#397657" stroke="#397657" stroke-width="2"/><path d="M 300.0 476 Q 274.0 287.0 292.0 177.0 Q 312.0 281.0 322.0 476 Z" fill="#507e68" stroke="#397657" stroke-width="2"/><path d="M 311.0 465 L 292.0 205.0" stroke="#d5e5ae" stroke-width="3" opacity=".6"/><path d="M 309.0 476 Q 302.0 263.0 320.0 153.0 Q 340.0 257.0 331.0 476 Z" fill="#b7d19a" stroke="#397657" stroke-width="2"/><path d="M 318.0 476 Q 330.0 303.0 348.0 193.0 Q 368.0 297.0 340.0 476 Z" fill="#6ea184" stroke="#397657" stroke-width="2"/><path d="M 329.0 465 L 348.0 221.0" stroke="#d5e5ae" stroke-width="3" opacity=".6"/><path d="M 327.0 476 Q 358.0 324.0 376.0 214.0 Q 396.0 318.0 349.0 476 Z" fill="#397657" stroke="#397657" stroke-width="2"/><path d="M 336.0 476 Q 386.0 325.0 404.0 215.0 Q 424.0 319.0 358.0 476 Z" fill="#507e68" stroke="#397657" stroke-width="2"/><path d="M 347.0 465 L 404.0 243.0" stroke="#d5e5ae" stroke-width="3" opacity=".6"/><path d="M 345.0 476 Q 414.0 365.0 432.0 255.0 Q 452.0 359.0 367.0 476 Z" fill="#b7d19a" stroke="#397657" stroke-width="2"/><path d="M 354.0 476 Q 442.0 374.0 460.0 264.0 Q 480.0 368.0 376.0 476 Z" fill="#6ea184" stroke="#397657" stroke-width="2"/><path d="M 365.0 465 L 460.0 292.0" stroke="#d5e5ae" stroke-width="3" opacity=".6"/></g>
+   <path d="M249 468 L392 468 L372 568 Q319 582 268 568 Z" fill="url(#pot)"/>
+   <path d="M265 488 L378 488" stroke="#f6d6bd" stroke-width="4" opacity=".25"/>
+   <ellipse cx="320" cy="466" rx="80" ry="17" fill="#784e3c"/>
+   <path d="M242 454 Q319 435 398 454 L397 473 Q319 488 243 473 Z" fill="url(#pot)"/>
+   <ellipse cx="320" cy="455" rx="78" ry="12" fill="#bf9b77" opacity=".65"/>
+   <path d="M279 558 Q320 570 360 558" stroke="#f7e2c9" stroke-opacity=".24" stroke-width="3" fill="none"/>
+   </svg>
