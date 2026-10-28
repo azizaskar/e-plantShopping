@@ -1,4 +1,4 @@
-# Paradise Nursery Shopping Application
+# e-plantShopping — Paradise Nursery Shopping Application
 
 Paradise Nursery is a responsive React + Redux Toolkit shopping cart application for an online houseplant shop, built for the IBM / Coursera *Developing Front-End Apps with React* final project.
 
@@ -39,7 +39,7 @@ Open the local URL printed by Vite. To create a production build, run `npm run b
 
 ## How to submit on Coursera
 
-Create a **public** repository under your own GitHub account and push these files. For each question, open the matching file on GitHub and copy its **file-page URL** (`https://github.com/YOUR_USERNAME/YOUR_REPOSITORY/blob/main/...`). Do not submit the repository homepage or a link to another person's project.
+Create a **public** GitHub repository named exactly **`e-plantShopping`** under your own account and push these files. For each question, open the matching file on GitHub and copy its **file-page URL** (`https://github.com/YOUR_USERNAME/YOUR_REPOSITORY/blob/main/...`). Do not submit the repository homepage or a link to another person's project.
 
 ## Test checklist
 

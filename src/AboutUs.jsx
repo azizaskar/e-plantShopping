@@ -1,7 +1,7 @@
 import React from 'react';
 export default function AboutUs() {
   return (
-    <div className="about-us">
+    <div className="about-us-container">
       <span className="eyebrow">A little about us</span>
       <h2>Every space deserves a little green.</h2>
       <p>

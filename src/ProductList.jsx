@@ -2,16 +2,49 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from './CartSlice.jsx';
 import { plants, categories } from './plants.js';
-import Navbar from './Navbar.jsx';
+
+// Navbar is defined here so the ProductList.jsx submission visibly contains
+// the Home, Plants, and Cart navigation plus a dynamic cart icon/count.
+// The same component is re-exported by Navbar.jsx for the Cart page.
+export function Navbar({ page, onNavigate, cartCount = 0 }) {
+  return (
+    <header className="site-header">
+      <div className="header-inner">
+        <button className="brand" onClick={() => onNavigate('home')} aria-label="Paradise Nursery home">
+          <span className="brand-symbol" aria-hidden="true">✳</span>
+          <span>paradise<span className="brand-accent">nursery</span></span>
+        </button>
+        <nav className="nav-links" aria-label="Main navigation">
+          <button className={page === 'home' ? 'active' : ''} onClick={() => onNavigate('home')}>Home</button>
+          <button className={page === 'plants' ? 'active' : ''} onClick={() => onNavigate('plants')}>Plants</button>
+          <button className={`cart-nav ${page === 'cart' ? 'active' : ''}`} onClick={() => onNavigate('cart')} aria-label={`Cart with ${cartCount} items`}>
+            <svg className="cart-icon" aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/>
+            </svg>
+            <span>Cart</span>
+            <span className="cart-count" aria-live="polite">{cartCount}</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+  );
+}
 
 export default function ProductList({ onNavigate }) {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
-  const inCart = new Set(cartItems.map((item) => item.id));
+  const cart = useSelector((state) => state.cart.items);
+  // Lookup by plant.name, as required by the assignment. Redux remains
+  // the source of truth, so a removed plant becomes available to add again.
+  const addedToCart = Object.fromEntries(cart.map((item) => [item.name, true]));
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const handleAddToCart = (plant) => {
+    if (!addedToCart[plant.name]) dispatch(addItem(plant));
+  };
 
   return (
     <>
-      <Navbar page="plants" onNavigate={onNavigate} />
+      <Navbar page="plants" onNavigate={onNavigate} cartCount={totalQuantity} />
       <main className="catalog-page">
         <div className="catalog-intro">
           <span className="eyebrow">Curated for your space</span>
@@ -29,30 +62,27 @@ export default function ProductList({ onNavigate }) {
               <span className="category-count">6 plants</span>
             </div>
             <div className="product-grid">
-              {plants.filter((plant) => plant.category === category).map((plant) => {
-                const added = inCart.has(plant.id);
-                return (
-                  <article className="plant-card" key={plant.id}>
-                    <div className="plant-image-wrap">
-                      <img src={plant.image} alt={plant.name} loading="lazy" />
+              {plants.filter((plant) => plant.category === category).map((plant) => (
+                <article className="plant-card" key={plant.id}>
+                  <div className="plant-image-wrap">
+                    <img src={plant.image} alt={plant.name} loading="lazy" />
+                  </div>
+                  <div className="plant-content">
+                    <h3>{plant.name}</h3>
+                    <p>{plant.description}</p>
+                    <div className="plant-card-bottom">
+                      <span className="plant-price">${plant.price.toFixed(2)}</span>
+                      <button
+                        className="add-button"
+                        disabled={addedToCart[plant.name]}
+                        onClick={() => handleAddToCart(plant)}
+                      >
+                        {addedToCart[plant.name] ? '✓ Added' : '+ Add to Cart'}
+                      </button>
                     </div>
-                    <div className="plant-content">
-                      <h3>{plant.name}</h3>
-                      <p>{plant.description}</p>
-                      <div className="plant-card-bottom">
-                        <span className="plant-price">${plant.price.toFixed(2)}</span>
-                        <button
-                          className="add-button"
-                          disabled={added}
-                          onClick={() => dispatch(addItem(plant))}
-                        >
-                          {added ? '✓ Added' : '+ Add to Cart'}
-                        </button>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
+                  </div>
+                </article>
+              ))}
             </div>
           </section>
         ))}

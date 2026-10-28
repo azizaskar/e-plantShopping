@@ -10,7 +10,7 @@ export default function App() {
   return (
     <div className="app-shell">
       {page === 'home' && (
-        <main className="landing-page">
+        <main className="landing-page background-image">
           <div className="landing-overlay" />
           <div className="landing-inner">
             <div className="landing-copy">
