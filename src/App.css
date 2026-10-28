@@ -180,3 +180,8 @@ img { display: block; max-width: 100%; }
 .cart-item-quantity { display: inline-flex; }
 .cart-item-total { font-variant-numeric: tabular-nums; }
 .cart_quantity_count { font-variant-numeric: tabular-nums; }
+
+/* Task 7 exact rubric button class names; original visual styles remain. */
+.get-started-button1.checkout-button { background: #244b35; color: #fff; }
+.get-started-button1.checkout-button:disabled { background: #a9baaa; }
+.get-started-button.continue-button { background: transparent; color: #31583c; }

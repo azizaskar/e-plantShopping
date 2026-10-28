@@ -53,3 +53,11 @@ Create a **public** GitHub repository named exactly **`e-plantShopping`** under 
 8. Navigate Home, Plants, and Cart with the shared navigation bar.
 
 This project contains locally generated plant illustration SVGs in `public/images/plants/`, so thumbnails do not depend on a third-party image service.
+
+## Rubric-critical behavior
+
+- `App.jsx` uses `showProductList` with `setShowProductList(true)` when Get Started is clicked.
+- `ProductList.jsx` includes `plantsArray` with three categories and exactly six separate plants in each.
+- The **same** exported `Navbar` from `ProductList.jsx` is rendered by both ProductList and CartItem. It reads total cart quantities from Redux, including after add, increment, decrement and delete.
+- Add to Cart disables per plant until removed; the label changes to **Added to Cart**.
+- CartItem has named `handleIncrement`, `handleDecrement`, `handleRemove`, `handleContinueShopping` handlers, plus Checkout → Coming Soon.

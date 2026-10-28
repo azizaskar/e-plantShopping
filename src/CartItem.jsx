@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice.jsx';
-import Navbar from './Navbar.jsx';
+import { Navbar } from './ProductList.jsx'; // SAME Navbar on Products and Cart
 
 export default function CartItem({ onNavigate }) {
   const dispatch = useDispatch();
@@ -29,13 +29,18 @@ export default function CartItem({ onNavigate }) {
     dispatch(removeItem(item.name));
   };
 
+  const handleContinueShopping = (e) => {
+    e.preventDefault();
+    onNavigate('plants');
+  };
+
   const handleCheckout = () => {
     window.alert('Coming Soon! Checkout is not available yet.');
   };
 
   return (
     <>
-      <Navbar page="cart" onNavigate={onNavigate} cartCount={totalItems} />
+      <Navbar page="cart" onNavigate={onNavigate} />
       <main className="cart-page">
         <div className="cart-heading">
           <div>
@@ -80,8 +85,8 @@ export default function CartItem({ onNavigate }) {
             <div className="summary-row"><span>Items</span><span>{totalItems}</span></div>
             <div className="summary-row"><span>Subtotal</span><span>${totalAmount.toFixed(2)}</span></div>
             <div className="summary-row summary-total"><strong>Total cart amount</strong><strong>${totalAmount.toFixed(2)}</strong></div>
-            <button className="checkout-button" onClick={handleCheckout} disabled={cart.length === 0}>Checkout</button>
-            <button className="continue-button" onClick={() => onNavigate('plants')}>← Continue shopping</button>
+            <button className="get-started-button1 checkout-button" onClick={handleCheckout} disabled={cart.length === 0}>Checkout</button>
+            <button className="get-started-button continue-button" onClick={handleContinueShopping}>← Continue shopping</button>
             <p className="summary-note">Happy plants, happy spaces. 🌱</p>
           </aside>
         </div>
