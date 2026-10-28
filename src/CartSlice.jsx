@@ -1,4 +1,3 @@
-import React from 'react';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -20,6 +19,7 @@ const cartSlice = createSlice({
           id: plant.id,
           name: plant.name,
           price: plant.price,
+          cost: plant.cost ?? plant.price,
           image: plant.image,
           quantity: 1,
         });
@@ -28,17 +28,18 @@ const cartSlice = createSlice({
 
     // Delete the entire cart entry (regardless of its quantity).
     removeItem: (state, action) => {
-      const id = action.payload;
-      state.items = state.items.filter((item) => item.id !== id);
+      // Accept either plant.name (Coursera task) or plant.id (existing code).
+      const identifier = action.payload;
+      state.items = state.items.filter((item) => item.name !== identifier && item.id !== identifier);
     },
 
     // Set quantity explicitly. Quantity zero removes the entry.
     updateQuantity: (state, action) => {
-      const { id, quantity } = action.payload;
-      const item = state.items.find((plant) => plant.id === id);
+      const { id, name, quantity } = action.payload;
+      const item = state.items.find((plant) => (id ? plant.id === id : plant.name === name));
       if (!item || !Number.isInteger(quantity)) return;
       if (quantity <= 0) {
-        state.items = state.items.filter((plant) => plant.id !== id);
+        state.items = state.items.filter((plant) => plant !== item);
       } else {
         item.quantity = quantity;
       }

@@ -7,22 +7,28 @@ import { plants, categories } from './plants.js';
 // the Home, Plants, and Cart navigation plus a dynamic cart icon/count.
 // The same component is re-exported by Navbar.jsx for the Cart page.
 export function Navbar({ page, onNavigate, cartCount = 0 }) {
+  // The same navigation component is shown on Plants and Cart pages.
+  const handleHomeClick = () => onNavigate('home');
+  const handlePlantsClick = () => onNavigate('plants');
+  const handleCartClick = () => onNavigate('cart');
+  const cart_quantity_count = cartCount;
+
   return (
-    <header className="site-header">
+    <header className="navbar">
       <div className="header-inner">
-        <button className="brand" onClick={() => onNavigate('home')} aria-label="Paradise Nursery home">
+        <button className="brand" onClick={handleHomeClick} aria-label="Paradise Nursery home">
           <span className="brand-symbol" aria-hidden="true">✳</span>
           <span>paradise<span className="brand-accent">nursery</span></span>
         </button>
         <nav className="nav-links" aria-label="Main navigation">
-          <button className={page === 'home' ? 'active' : ''} onClick={() => onNavigate('home')}>Home</button>
-          <button className={page === 'plants' ? 'active' : ''} onClick={() => onNavigate('plants')}>Plants</button>
-          <button className={`cart-nav ${page === 'cart' ? 'active' : ''}`} onClick={() => onNavigate('cart')} aria-label={`Cart with ${cartCount} items`}>
+          <button className={page === 'home' ? 'active' : ''} onClick={handleHomeClick}>Home</button>
+          <button className={page === 'plants' ? 'active' : ''} onClick={handlePlantsClick}>Plants</button>
+          <button className={`cart-nav ${page === 'cart' ? 'active' : ''}`} onClick={handleCartClick} aria-label={`Cart with ${cartCount} items`}>
             <svg className="cart-icon" aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/>
             </svg>
             <span>Cart</span>
-            <span className="cart-count" aria-live="polite">{cartCount}</span>
+            <span className="cart-count cart_quantity_count" aria-live="polite">{cart_quantity_count}</span>
           </button>
         </nav>
       </div>
@@ -36,7 +42,12 @@ export default function ProductList({ onNavigate }) {
   // Lookup by plant.name, as required by the assignment. Redux remains
   // the source of truth, so a removed plant becomes available to add again.
   const addedToCart = Object.fromEntries(cart.map((item) => [item.name, true]));
-  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cart_quantity_count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  // Keep plants grouped as category objects for predictable rendering.
+  const plantsArray = categories.map((category) => ({
+    category,
+    plants: plants.filter((plant) => plant.category === category),
+  }));
 
   const handleAddToCart = (plant) => {
     if (!addedToCart[plant.name]) dispatch(addItem(plant));
@@ -44,7 +55,7 @@ export default function ProductList({ onNavigate }) {
 
   return (
     <>
-      <Navbar page="plants" onNavigate={onNavigate} cartCount={totalQuantity} />
+      <Navbar page="plants" onNavigate={onNavigate} cartCount={cart_quantity_count} />
       <main className="catalog-page">
         <div className="catalog-intro">
           <span className="eyebrow">Curated for your space</span>
@@ -52,7 +63,7 @@ export default function ProductList({ onNavigate }) {
           <p>Find something green for every corner. Browse 18 plants across three thoughtfully chosen collections.</p>
         </div>
 
-        {categories.map((category, index) => (
+        {plantsArray.map(({ category, plants: categoryPlants }, index) => (
           <section className="category-section" key={category} aria-label={category}>
             <div className="category-heading">
               <div>
@@ -61,8 +72,8 @@ export default function ProductList({ onNavigate }) {
               </div>
               <span className="category-count">6 plants</span>
             </div>
-            <div className="product-grid">
-              {plants.filter((plant) => plant.category === category).map((plant) => (
+            <div className="product-list product-grid">
+              {categoryPlants.map((plant) => (
                 <article className="plant-card" key={plant.id}>
                   <div className="plant-image-wrap">
                     <img src={plant.image} alt={plant.name} loading="lazy" />
@@ -77,7 +88,7 @@ export default function ProductList({ onNavigate }) {
                         disabled={addedToCart[plant.name]}
                         onClick={() => handleAddToCart(plant)}
                       >
-                        {addedToCart[plant.name] ? '✓ Added' : '+ Add to Cart'}
+                        {addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'}
                       </button>
                     </div>
                   </div>

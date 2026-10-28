@@ -7,8 +7,9 @@ export default function CartItem({ onNavigate }) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const calculateTotalCost = (item) => item.price * item.quantity;
+  const getUnitCost = (item) => Number(item.cost);
+  const totalAmount = cart.reduce((sum, item) => sum + getUnitCost(item) * item.quantity, 0);
+  const calculateTotalCost = (item) => getUnitCost(item) * item.quantity;
 
   // Coursera's rubric names these handlers explicitly.
   const handleIncrement = (item) => {
@@ -18,14 +19,14 @@ export default function CartItem({ onNavigate }) {
   const handleDecrement = (item) => {
     // Decreasing a 1-quantity plant removes it from the cart.
     if (item.quantity <= 1) {
-      dispatch(removeItem(item.id));
+      dispatch(removeItem(item.name));
     } else {
       dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
     }
   };
 
   const handleRemove = (item) => {
-    dispatch(removeItem(item.id));
+    dispatch(removeItem(item.name));
   };
 
   const handleCheckout = () => {
@@ -56,18 +57,18 @@ export default function CartItem({ onNavigate }) {
             ) : (
               cart.map((item) => (
                 <article className="cart-item" key={item.id}>
-                  <div className="cart-thumb"><img src={item.image} alt={item.name} /></div>
+                  <div className="cart-thumb"><img className="cart-item-image" src={item.image} alt={item.name} /></div>
                   <div className="cart-item-details">
-                    <h2>{item.name}</h2>
-                    <p>Unit price: ${item.price.toFixed(2)}</p>
+                    <h2 className="cart-item-name">{item.name}</h2>
+                    <p className="cart-item-cost">Unit price: ${Number(item.cost).toFixed(2)}</p>
                     <button className="cart-item-delete remove-button" onClick={() => handleRemove(item)}>Delete</button>
                   </div>
-                  <div className="quantity-control" aria-label={`Quantity for ${item.name}`}>
+                  <div className="quantity-control cart-item-quantity" aria-label={`Quantity for ${item.name}`}>
                     <button aria-label={`Decrease ${item.name} quantity`} onClick={() => handleDecrement(item)}>−</button>
                     <span aria-live="polite">{item.quantity}</span>
                     <button aria-label={`Increase ${item.name} quantity`} onClick={() => handleIncrement(item)}>+</button>
                   </div>
-                  <strong className="line-total">${calculateTotalCost(item).toFixed(2)}</strong>
+                  <strong className="line-total cart-item-total">${calculateTotalCost(item).toFixed(2)}</strong>
                 </article>
               ))
             )}
